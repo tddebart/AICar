@@ -85,7 +85,6 @@ public class Car
         var extraInbetween = Vector2.Distance(position, fitnessLines[fitnessIndex].Center());
 
         fitness = fitnessIndex * 10 + laps * fitnessLines.Count * 10 + laps * 20 + (1-extraInbetween / maxDistance) * 10;
-        if (Form1.ActiveForm != null) ((Form1)Form1.ActiveForm).fitnessLabel.Text = $"Fitness: {fitness}";
     }
 
     private void Move()

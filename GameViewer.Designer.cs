@@ -1,6 +1,9 @@
-﻿namespace AICar;
+﻿using SharpNeat.Windows;
+using SharpNeat.Windows.Neat;
 
-partial class Form1
+namespace AICar;
+
+partial class GameViewer
 {
     /// <summary>
     ///  Required designer variable.
@@ -35,6 +38,7 @@ partial class Form1
             // this.button1 = new System.Windows.Forms.Button();
             this.fitnessCheckBox = new System.Windows.Forms.CheckBox();
             this.fitnessLabel = new System.Windows.Forms.Label();
+            this.genomeControl = new NeatGenomeControl();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -43,7 +47,7 @@ partial class Form1
             this.pictureBox.BackColor = System.Drawing.Color.DarkGray;
             this.pictureBox.Location = new System.Drawing.Point(22, 12);
             this.pictureBox.Name = "pictureBox";
-            this.pictureBox.Size = new System.Drawing.Size(1396, 962);
+            this.pictureBox.Size = new System.Drawing.Size(1900, 962);
             this.pictureBox.TabIndex = 0;
             this.pictureBox.TabStop = false;
             this.pictureBox.Paint += new System.Windows.Forms.PaintEventHandler(this.Draw);
@@ -87,6 +91,14 @@ partial class Form1
             this.fitnessLabel.Size = new System.Drawing.Size(60, 20);
             this.fitnessLabel.TabIndex = 3;
             this.fitnessLabel.Text = "Fitness: ";
+            //
+            // genomeControl
+            //
+            this.genomeControl.Location = new System.Drawing.Point(1446, 187);
+            this.genomeControl.Name = "genomeControl";
+            this.genomeControl.Size = new System.Drawing.Size(400, 600);
+            this.genomeControl.TabIndex = 4;
+            this.genomeControl.BackColor = Color.Transparent;
             // 
             // Form1
             // 
@@ -94,12 +106,13 @@ partial class Form1
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.ClientSize = new System.Drawing.Size(1950, 1005);
+            this.Controls.Add(this.genomeControl);
             this.Controls.Add(this.fitnessLabel);
             this.Controls.Add(this.fitnessCheckBox);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.pictureBox);
             this.KeyPreview = true;
-            this.Name = "Form1";
+            this.Name = "GameViewer";
             this.Text = "Form1";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.KeysDown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.KeysUp);
@@ -116,4 +129,5 @@ partial class Form1
     private Button button1;
     private CheckBox fitnessCheckBox;
     public Label fitnessLabel;
+    private GenomeControl genomeControl;
 }

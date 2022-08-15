@@ -2,13 +2,21 @@
 
 using System.Drawing.Drawing2D;
 using System.Text.Json;
+using System.Xml;
 using DebugTools.Tools;
 using Microsoft.VisualBasic.Devices;
+using SharpNeat.IO;
+using SharpNeat.Neat.Genome;
+using SharpNeat.Neat.Genome.IO;
+using SharpNeat.NeuralNets.Double.ActivationFunctions;
+using SharpNeat.Windows;
+using SharpNeat.Windows.App.Forms;
+using SharpNeat.Windows.Neat;
 using UtilsN;
 
 namespace AICar;
 
-public partial class Form1 : Form
+public partial class GameViewer : Form
 {
     public Game game;
 
@@ -16,26 +24,39 @@ public partial class Form1 : Form
 
     public Vector2 startPoint;
 
-    public Form1()
+    public GameViewer()
     {
         InitializeComponent();
         
         var inspector = new Inspector();
         
         game = new Game();
+
+        // "F:\\Software_developer\\C#\\AICar\\train.xml"
+
+        var metaNeatGenome = MetaNeatGenome<double>.CreateCyclic(14, 4, 1, new LeakyReLU());
+        var genome = NeatGenomeLoader.Load("F:\\Software_developer\\C#\\AICar\\bestGenome.net", metaNeatGenome, 0);
+        
+        genomeControl.Genome = genome;
+        
+
     }
     
     private void Update(object sender, EventArgs e) 
     {
         game.Update();
+        
+        if (ActiveForm is GameViewer viewer) viewer.fitnessLabel.Text = $"Fitness: {game.car.fitness}";
 
         pictureBox.Invalidate();
     }
 
     private void Draw(object sender, PaintEventArgs e)
     {
+        // Enable anti-aliasing.
         e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
         
+        // Draw the fitness checkpoint lines
         if (fitnessCheckBox.Checked)
         {
             foreach (Line line in Game.fitnessLines)
@@ -44,14 +65,27 @@ public partial class Form1 : Form
             }
         }
         
+        // Draw the game car.
         game.car.Draw(e.Graphics);
         
+        // Draw the walls
         foreach (Line line in Game.lines)
         {
             e.Graphics.DrawLines(new Pen(Color.Black, 5), new [] { (PointF)line.start, (PointF)line.end });
         }
-
         
+        // Draw the NearalNetwork Inputs
+
+        for (var i = 0; i < game.car.sensors.readings.Length; i++)
+        {
+            var input = game.car.sensors.readings[i];
+            var color = Color.FromArgb((int)((1-input) * 255), 0, 255, 0);
+            e.Graphics.FillEllipse(new SolidBrush(color) , 1600 + i * 50, 50, 50, 50);
+        }
+        
+        
+
+        // Draw the drawing line
         if (creatingLine)
         {
             e.Graphics.DrawLine(new Pen(Color.Black, 5), startPoint, pictureBox.PointToClient(Cursor.Position));

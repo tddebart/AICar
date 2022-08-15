@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <OutputType>WinExe</OutputType>
+        <OutputType>Exe</OutputType>
         <TargetFramework>net6.0-windows</TargetFramework>
         <Nullable>enable</Nullable>
         <UseWindowsForms>true</UseWindowsForms>
@@ -9,6 +9,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="Redzen" Version="13.0.0" />
       <PackageReference Include="WinForm.Inspector.Tool" Version="1.0.0.9" />
     </ItemGroup>
 
@@ -16,6 +17,21 @@
       <Reference Include="SharpNeat">
         <HintPath>..\SharpNeat\src\SharpNeat\bin\Debug\net6.0\SharpNeat.dll</HintPath>
       </Reference>
+      <Reference Include="SharpNeat.Drawing">
+        <HintPath>..\SharpNeat\src\SharpNeat.Drawing\bin\Debug\net6.0-windows\SharpNeat.Drawing.dll</HintPath>
+      </Reference>
+      <Reference Include="SharpNeat.Windows">
+        <HintPath>..\SharpNeat\src\SharpNeat.Windows\bin\Debug\net6.0-windows\SharpNeat.Windows.dll</HintPath>
+      </Reference>
+      <Reference Include="SharpNeat.Windows.App">
+        <HintPath>..\SharpNeat\src\SharpNeat.Windows.App\bin\Debug\net6.0-windows\SharpNeat.Windows.App.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Initialize.cs">
+        <SubType>Form</SubType>
+      </Compile>
     </ItemGroup>
 
 </Project>
