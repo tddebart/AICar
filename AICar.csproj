@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net6.0-windows</TargetFramework>
+        <Nullable>enable</Nullable>
+        <UseWindowsForms>true</UseWindowsForms>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="WinForm.Inspector.Tool" Version="1.0.0.9" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="SharpNeat">
+        <HintPath>..\SharpNeat\src\SharpNeat\bin\Debug\net6.0\SharpNeat.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+</Project>
