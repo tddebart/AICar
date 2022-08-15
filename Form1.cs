@@ -1,5 +1,6 @@
 
 
+using System.Drawing.Drawing2D;
 using System.Text.Json;
 using DebugTools.Tools;
 using Microsoft.VisualBasic.Devices;
@@ -14,58 +15,38 @@ public partial class Form1 : Form
     public bool creatingLine;
 
     public Vector2 startPoint;
-    
-    public Car car;
-    
-    public static List<Line> lines = new List<Line>();
-    public static List<Line> fitnessLines = new List<Line>();
 
     public Form1()
     {
         InitializeComponent();
         
         var inspector = new Inspector();
-        // Load lines
-        if(File.Exists("lines.json"))
-        {
-            string json = File.ReadAllText("lines.json");
-            lines = JsonSerializer.Deserialize<List<Line>>(json) ?? new List<Line>();
-        }
-        // Load fitness points
-        if(File.Exists("fitnessLines.json"))
-        {
-            string json = File.ReadAllText("fitnessLines.json");
-            fitnessLines = JsonSerializer.Deserialize<List<Line>>(json) ?? new List<Line>();
-        }
         
-        car = new Car(new Vector2(125, 500), 30,50,6, Color.Gray, true);
-        Update();
-        
-        
-        
+        game = new Game();
     }
     
-    private void Update(object sender, EventArgs e) {
-        car.Update();
-
-        // Focus();
+    private void Update(object sender, EventArgs e) 
+    {
+        game.Update();
 
         pictureBox.Invalidate();
     }
 
     private void Draw(object sender, PaintEventArgs e)
     {
+        e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+        
         if (fitnessCheckBox.Checked)
         {
-            foreach (Line line in fitnessLines)
+            foreach (Line line in Game.fitnessLines)
             {
                 e.Graphics.DrawLines(new Pen(Color.Green, 5), new [] { (PointF)line.start, (PointF)line.end });
             }
         }
         
-        car.Draw(e.Graphics);
+        game.car.Draw(e.Graphics);
         
-        foreach (Line line in lines)
+        foreach (Line line in Game.lines)
         {
             e.Graphics.DrawLines(new Pen(Color.Black, 5), new [] { (PointF)line.start, (PointF)line.end });
         }
@@ -79,12 +60,12 @@ public partial class Form1 : Form
 
     public void KeysDown(object? sender, KeyEventArgs keyEventArgs)
     {
-        car.KeyDown(keyEventArgs.KeyCode);
+        game.car.KeyDown(keyEventArgs.KeyCode);
     }
 
     private void KeysUp(object? sender, KeyEventArgs e)
     {
-        car.KeyUp(e.KeyCode);
+        game.car.KeyUp(e.KeyCode);
     }
 
     private void pictureBox_Click(object? sender, MouseEventArgs eventArgs)
@@ -97,7 +78,7 @@ public partial class Form1 : Form
                 creatingLine = true;
             } else
             {
-                fitnessLines.Add(new Line(startPoint, eventArgs.Location));
+                Game.fitnessLines.Add(new Line(startPoint, eventArgs.Location));
                 creatingLine = false;
             }
         }
@@ -110,7 +91,7 @@ public partial class Form1 : Form
     private void button1_Click(object sender, EventArgs e) 
     {
         // Save the lines to json
-        string json = JsonSerializer.Serialize(fitnessLines);
+        string json = JsonSerializer.Serialize(Game.fitnessLines);
         File.WriteAllText("fitnessLines.json", json);
     }
 }

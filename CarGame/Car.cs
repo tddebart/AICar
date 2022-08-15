@@ -20,8 +20,8 @@ public class Car
     public Controls controls;
     public Sensors sensors;
 
-    public List<Line> lines => Form1.lines;
-    public List<Line> fitnessLines => Form1.fitnessLines;
+    public List<Line> lines => Game.lines;
+    public List<Line> fitnessLines => Game.fitnessLines;
 
 
     public PointF[] polygon = new PointF[4];
