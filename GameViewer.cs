@@ -9,6 +9,8 @@ using SharpNeat.IO;
 using SharpNeat.Neat.Genome;
 using SharpNeat.Neat.Genome.IO;
 using SharpNeat.NeuralNets.Double.ActivationFunctions;
+using SharpNeat.NeuralNets.Double.ActivationFunctions.Cppn;
+using SharpNeat.NeuralNets.IO;
 using SharpNeat.Windows;
 using SharpNeat.Windows.App.Forms;
 using SharpNeat.Windows.Neat;
@@ -19,6 +21,8 @@ namespace AICar;
 public partial class GameViewer : Form
 {
     public Game game;
+    
+    private int genomeIndex = 1;
 
     public bool creatingLine;
 
@@ -30,7 +34,7 @@ public partial class GameViewer : Form
         
         var inspector = new Inspector();
         
-        game = new Game();
+        game = new Game(true);
 
         // "F:\\Software_developer\\C#\\AICar\\train.xml"
 
@@ -41,6 +45,7 @@ public partial class GameViewer : Form
         game.Update();
         
         if (ActiveForm is GameViewer viewer) viewer.fitnessLabel.Text = $"Fitness: {game.car.fitness}";
+        genomeControl.Genome = game.genome;
 
         pictureBox.Invalidate();
     }

@@ -34,4 +34,12 @@
       </Compile>
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Genomes" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Genomes\bestGenome51.net" />
+    </ItemGroup>
+
 </Project>

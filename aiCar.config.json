@@ -1,0 +1,34 @@
+﻿{
+	"name":"AI Car game",
+	"isAcyclic": false,
+	"cyclesPerActivation": 1,
+	"activationFnName": "LeakyReLU",
+	"evolutionAlgorithm": {
+		"speciesCount" : 5,
+		"elitismProportion" : 0.2,
+		"selectionProportion" : 0.9,
+		"offspringAsexualProportion" : 0.5,
+		"offspringSexualProportion" : 0.5,
+		"interspeciesMatingProportion" : 0.01
+	},
+	"reproductionAsexual": {
+		"connectionWeightMutationProbability": 0.94,
+		"addNodeMutationProbability": 0.01,
+		"addConnectionMutationProbability": 0.025,
+		"deleteConnectionMutationProbability": 0.025
+	},
+	"reproductionSexual": {
+		"secondaryParentGeneProbability": 0.1
+	},
+	"populationSize": 50,
+	"initialInterconnectionsProportion": 0.05,
+	"connectionWeightScale": 5.0,
+	"complexityRegulationStrategy": {
+		"strategyName": "absolute",
+		"complexityCeiling": 15,
+		"minSimplifcationGenerations": 10
+	},
+	"degreeOfParallelism": 6,
+	"enableHardwareAcceleratedNeuralNets": false,
+	"enableHardwareAcceleratedActivationFunctions": false
+}

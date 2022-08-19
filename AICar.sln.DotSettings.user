@@ -3,4 +3,7 @@
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=F_003A_005CSoftware_005Fdeveloper_005CC_0023_005CSharpNeat_005Csrc_005CSharpNeat_002Esln/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=F_003A_005CSoftware_005Fdeveloper_005CC_0023_005CSharpNeat_005Csrc_005CSharpNeat_002EWindows_002EApp_005Cbin_005CDebug_005Cnet6_002E0_002Dwindows_005CSharpNeat_002EWindows_002EApp_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=F_003A_005CSoftware_005Fdeveloper_005CC_0023_005CSharpNeat_005Csrc_005CSharpNeat_002EWindows_005Cbin_005CDebug_005Cnet6_002E0_002Dwindows_005CSharpNeat_002EWindows_002Edll/@EntryIndexedValue">True</s:Boolean>
-	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=F_003A_005CSoftware_005Fdeveloper_005CC_0023_005CSharpNeat_005Csrc_005CSharpNeat_005Cbin_005CDebug_005Cnet6_002E0_005CSharpNeat_002Edll/@EntryIndexedValue">True</s:Boolean></wpf:ResourceDictionary>
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=F_003A_005CSoftware_005Fdeveloper_005CC_0023_005CSharpNeat_005Csrc_005CSharpNeat_005Cbin_005CDebug_005Cnet6_002E0_005CSharpNeat_002Edll/@EntryIndexedValue">True</s:Boolean>
+	<s:String x:Key="/Default/Environment/AssemblyExplorer/XmlDocument/@EntryValue">&lt;AssemblyExplorer&gt;&#xD;
+  &lt;Assembly Path="F:\Software_developer\C#\SharpNeat\src\SharpNeat\bin\Debug\net6.0\SharpNeat.dll" /&gt;&#xD;
+&lt;/AssemblyExplorer&gt;</s:String></wpf:ResourceDictionary>

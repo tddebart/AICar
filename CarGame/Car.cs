@@ -1,4 +1,5 @@
 ﻿using AICar;
+using SharpNeat;
 using UtilsN;
 
 public class Car
@@ -27,12 +28,14 @@ public class Car
 
     public PointF[] polygon = new PointF[4];
 
+    public IBlackBox<double>? brain;
+
 
     public float fitness = 0;
     private int fitnessIndex = 0;
     private int laps = 0;
 
-    public Car(Vector2 position, int width, int height, float maxSpeed, Color color, bool playerControlled = false)
+    public Car(Vector2 position, int width, int height, float maxSpeed, Color color, bool playerControlled = false, IBlackBox<double>? brain = null)
     {
         this.position = position;
         this.width = width;
@@ -40,6 +43,7 @@ public class Car
         this.maxSpeed = maxSpeed;
         this.color = color;
         this.playerControlled = playerControlled;
+        this.brain = brain;
         
         controls = new Controls();
         sensors = new Sensors(this);

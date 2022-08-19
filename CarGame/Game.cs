@@ -1,5 +1,10 @@
 ﻿
 using System.Text.Json;
+using SharpNeat;
+using SharpNeat.Neat.Genome;
+using SharpNeat.Neat.Genome.IO;
+using SharpNeat.NeuralNets.Double.ActivationFunctions;
+using SharpNeat.NeuralNets.IO;
 using UtilsN;
 
 public class Game
@@ -9,7 +14,10 @@ public class Game
     public static List<Line> lines = new List<Line>();
     public static List<Line> fitnessLines = new List<Line>();
 
-    public Game()
+    public NeatGenome<double>? genome;
+    public IBlackBox<double> brain = null;
+
+    public Game(bool showingBest = false, int loadIndex = 1)
     {
         // Load lines
         if(File.Exists("lines.json"))
@@ -24,7 +32,22 @@ public class Game
             fitnessLines = JsonSerializer.Deserialize<List<Line>>(json) ?? new List<Line>();
         }
         
-        car = new Car(new Vector2(125, 500), 30,50,6, Color.Gray, true);
+        var filePath = "F:\\Software_developer\\C#\\AICar\\Genomes\\bestGenome.net";
+        
+        if (showingBest && File.Exists(filePath))
+        {
+            var metaNeatGenome = MetaNeatGenome<double>.CreateCyclic(Sensors.rayCount+1, 4,1, new LeakyReLU());
+            genome = NeatGenomeLoader.Load(filePath, metaNeatGenome, loadIndex);
+        
+            
+
+            var netFile = NeatGenomeConverter.ToNetFileModel(genome);
+            brain = NeuralNetConverter.ToCyclicNeuralNet(netFile);
+        }
+        
+        car = new Car(new Vector2(125, 500), 30,50,6, Color.Gray, false,brain);
+
+        
         Update();
     }
 
