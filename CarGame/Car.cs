@@ -23,6 +23,7 @@ public class Car
     public List<Line> lines => Game.lines;
     public List<Line> fitnessLines => Game.fitnessLines;
 
+    public long ticksPassedSinceLastCheckpoint;
 
     public PointF[] polygon = new PointF[4];
 
@@ -46,11 +47,37 @@ public class Car
 
     public void Update()
     {
-        polygon = CreatePolygon();
-        damaged = AssesDamage();
-        Move();
-        
+        ticksPassedSinceLastCheckpoint++;
+
+        if (!damaged)
+        {
+            if (brain != null)
+            {
+                brain.Reset();
+                var inputs = brain.Inputs.Span;
+                inputs[0] = 1;
+                for (var i = 1; i < sensors.readings.Length+1; i++)
+                {
+                    inputs[i] = sensors.readings[i-1];
+                }
+                
+                brain.Activate();
+                
+                var outputs = brain.Outputs.Span;
+                controls.forward = outputs[0] < 0.5;
+                controls.left = outputs[1] > 0.5;
+                controls.right = outputs[2] > 0.5;
+                controls.backward = outputs[3] > 0.5;
+            }
+            
+            CreatePolygon();
+            damaged = AssesDamage();
+            Move();
+        }
+
+
         UpdateFitness();
+        
         
         sensors.Update();
     }
@@ -61,18 +88,35 @@ public class Car
         {
             if (Utils.PolygonIntersects(polygon, line.ToArray()))
             {
-                fitness -= 5;
+                fitness -= 10;
                 return true;
             }
         }
+        
+        if(ticksPassedSinceLastCheckpoint > 100)
+        {
+            fitness -= 50;
+            return true;
+        }
+        
+        if(fitness < 0) fitness = 0;
+        
         return false;
     }
 
     private void UpdateFitness()
     {
+        fitness = GetFitness();
+    }
+
+    public float GetFitness()
+    {
+        float fitness;
+        
         if(Utils.PolygonIntersects(polygon, fitnessLines[fitnessIndex].ToArray()))
         {
             fitnessIndex++;
+            ticksPassedSinceLastCheckpoint = 0;
         }
         
         if(fitnessIndex == fitnessLines.Count)
@@ -84,7 +128,10 @@ public class Car
         var maxDistance = Vector2.Distance(fitnessLines[fitnessIndex-1 < 0 ? fitnessLines.Count-1 : fitnessIndex-1].Center(), fitnessLines[fitnessIndex].Center());
         var extraInbetween = Vector2.Distance(position, fitnessLines[fitnessIndex].Center());
 
-        fitness = fitnessIndex * 10 + laps * fitnessLines.Count * 10 + laps * 20 + (1-extraInbetween / maxDistance) * 10;
+        fitness = fitnessIndex * 10 + laps * fitnessLines.Count * 10 + laps * 20 + (1-extraInbetween / maxDistance) * 10 - 4.550809383392334f;
+        if(fitness < 0) fitness = 0;
+
+        return fitness;
     }
 
     private void Move()
@@ -147,9 +194,8 @@ public class Car
     }
     
     
-    private PointF[] CreatePolygon()
+    private void CreatePolygon()
     {
-        var polygon = new PointF[4];
         var rad = MathF.Sqrt(width * width + height * height) / 2;
         var alpha = MathF.Atan2(height, width);
         
@@ -171,9 +217,6 @@ public class Car
             position.x - MathF.Cos(MathF.PI+angle+alpha)*rad,
             position.y - MathF.Sin(MathF.PI+angle+alpha)*rad
         );
-
-
-        return polygon;
     }
 
     public void Draw(Graphics g)

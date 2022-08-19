@@ -7,7 +7,7 @@ public class Sensors
     public Car car;
     public const int rayCount = 5;
     public const int rayLength = 350;
-    public const float raySpread = MathF.PI / 5;
+    public const float raySpread = MathF.PI / 3;
     
     public List<Line> rays = new ();
     public Vector2[] pointReadings = new Vector2[rayCount];
@@ -26,8 +26,6 @@ public class Sensors
         {
             pointReadings[i] = GetReading(rays[i], out readings[i]);
         }
-        
-        Debug.WriteLine(readings[0]);
     }
 
     public void CastRays()
@@ -59,6 +57,8 @@ public class Sensors
                 }
             }
         }
+
+        distanceReading = 1 - distanceReading;
         
         return reading;
     }

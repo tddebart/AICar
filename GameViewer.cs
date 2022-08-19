@@ -34,12 +34,6 @@ public partial class GameViewer : Form
 
         // "F:\\Software_developer\\C#\\AICar\\train.xml"
 
-        var metaNeatGenome = MetaNeatGenome<double>.CreateCyclic(14, 4, 1, new LeakyReLU());
-        var genome = NeatGenomeLoader.Load("F:\\Software_developer\\C#\\AICar\\bestGenome.net", metaNeatGenome, 0);
-        
-        genomeControl.Genome = genome;
-        
-
     }
     
     private void Update(object sender, EventArgs e) 
@@ -79,8 +73,23 @@ public partial class GameViewer : Form
         for (var i = 0; i < game.car.sensors.readings.Length; i++)
         {
             var input = game.car.sensors.readings[i];
-            var color = Color.FromArgb((int)((1-input) * 255), 0, 255, 0);
+            var color = Color.FromArgb((int)(input * 255), 0, 255, 0);
             e.Graphics.FillEllipse(new SolidBrush(color) , 1600 + i * 50, 50, 50, 50);
+        }
+        
+        for (var i = 0; i < game.car.sensors.readings.Length; i++)
+        {
+            var input = i switch
+            {
+                1 => game.car.controls.forward ? 1 : 0.25f,
+                2 => game.car.controls.left ? 1 : 0.25f,
+                3 => game.car.controls.right ? 1 : 0.25f,
+                4 => game.car.controls.backward ? 1 : 0.25f,
+                _ => 0
+            };
+
+            var color = Color.FromArgb((int)(input * 255), 0, 255, 0);
+            e.Graphics.FillEllipse(new SolidBrush(color) , 1600 + i * 50, 100, 50, 50);
         }
         
         
@@ -127,5 +136,19 @@ public partial class GameViewer : Form
         // Save the lines to json
         string json = JsonSerializer.Serialize(Game.fitnessLines);
         File.WriteAllText("fitnessLines.json", json);
+    }
+
+    private void indexForw_Click(object sender, EventArgs e) 
+    {
+        genomeIndex++;
+        genomeIndexControl.Text = genomeIndex.ToString();
+        game = new Game(true, genomeIndex);
+    }
+
+    private void indexBack_Click(object sender, EventArgs e) 
+    {
+        genomeIndex--;
+        genomeIndexControl.Text = genomeIndex.ToString();
+        game = new Game(true, genomeIndex);
     }
 }

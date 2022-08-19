@@ -35,10 +35,12 @@ partial class GameViewer
             this.components = new System.ComponentModel.Container();
             this.pictureBox = new System.Windows.Forms.PictureBox();
             this.timer = new System.Windows.Forms.Timer(this.components);
-            // this.button1 = new System.Windows.Forms.Button();
             this.fitnessCheckBox = new System.Windows.Forms.CheckBox();
             this.fitnessLabel = new System.Windows.Forms.Label();
-            this.genomeControl = new NeatGenomeControl();
+            this.genomeControl = new SharpNeat.Windows.Neat.NeatGenomeControl();
+            this.indexBack = new System.Windows.Forms.Button();
+            this.indexForw = new System.Windows.Forms.Button();
+            this.genomeIndexControl = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -58,16 +60,6 @@ partial class GameViewer
             this.timer.Enabled = true;
             this.timer.Interval = 1;
             this.timer.Tick += new System.EventHandler(this.Update);
-            // 
-            // button1
-            // 
-            // this.button1.Location = new System.Drawing.Point(1446, 23);
-            // this.button1.Name = "button1";
-            // this.button1.Size = new System.Drawing.Size(224, 104);
-            // this.button1.TabIndex = 1;
-            // this.button1.Text = "Save lines";
-            // this.button1.UseVisualStyleBackColor = true;
-            // this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // fitnessCheckBox
             // 
@@ -91,25 +83,60 @@ partial class GameViewer
             this.fitnessLabel.Size = new System.Drawing.Size(60, 20);
             this.fitnessLabel.TabIndex = 3;
             this.fitnessLabel.Text = "Fitness: ";
-            //
+            // 
             // genomeControl
-            //
+            // 
+            this.genomeControl.BackColor = System.Drawing.Color.Transparent;
+            this.genomeControl.Genome = null;
             this.genomeControl.Location = new System.Drawing.Point(1446, 187);
+            this.genomeControl.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.genomeControl.Name = "genomeControl";
             this.genomeControl.Size = new System.Drawing.Size(400, 600);
             this.genomeControl.TabIndex = 4;
-            this.genomeControl.BackColor = Color.Transparent;
             // 
-            // Form1
+            // indexBack
+            // 
+            this.indexBack.Location = new System.Drawing.Point(1452, 852);
+            this.indexBack.Name = "indexBack";
+            this.indexBack.Size = new System.Drawing.Size(49, 53);
+            this.indexBack.TabIndex = 5;
+            this.indexBack.Text = "<";
+            this.indexBack.UseVisualStyleBackColor = true;
+            this.indexBack.Click += new System.EventHandler(this.indexBack_Click);
+            // 
+            // indexForw
+            // 
+            this.indexForw.Location = new System.Drawing.Point(1555, 852);
+            this.indexForw.Name = "indexForw";
+            this.indexForw.Size = new System.Drawing.Size(51, 53);
+            this.indexForw.TabIndex = 6;
+            this.indexForw.Text = ">";
+            this.indexForw.UseVisualStyleBackColor = true;
+            this.indexForw.Click += new System.EventHandler(this.indexForw_Click);
+            // 
+            // genomeIndexControl
+            // 
+            this.genomeIndexControl.AutoSize = true;
+            this.genomeIndexControl.BackColor = System.Drawing.Color.Black;
+            this.genomeIndexControl.ForeColor = System.Drawing.SystemColors.Control;
+            this.genomeIndexControl.Location = new System.Drawing.Point(1519, 868);
+            this.genomeIndexControl.Name = "genomeIndexControl";
+            this.genomeIndexControl.Size = new System.Drawing.Size(17, 20);
+            this.genomeIndexControl.TabIndex = 7;
+            this.genomeIndexControl.Text = "0";
+            // 
+            // GameViewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.ClientSize = new System.Drawing.Size(1950, 1005);
+            this.Controls.Add(this.genomeIndexControl);
+            this.Controls.Add(this.indexForw);
+            this.Controls.Add(this.indexBack);
             this.Controls.Add(this.genomeControl);
             this.Controls.Add(this.fitnessLabel);
             this.Controls.Add(this.fitnessCheckBox);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.pictureBox);
             this.KeyPreview = true;
             this.Name = "GameViewer";
@@ -129,5 +156,8 @@ partial class GameViewer
     private Button button1;
     private CheckBox fitnessCheckBox;
     public Label fitnessLabel;
-    private GenomeControl genomeControl;
+    private Button indexBack;
+    private Button indexForw;
+    private Label genomeIndexControl;
+    private NeatGenomeControl genomeControl;
 }
